@@ -1,23 +1,38 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface InitialTypes {
-  value: string;
+  loading: boolean;
+  value: string | null;
+  error: string | null;
   status: string;
 }
 
 const initialState: InitialTypes = {
-  value: '',
+  loading: false,
+  value: null,
+  error: null,
   status: 'idle',
 };
 
-export const logInUser = createAsyncThunk('login', async () => {
-  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
-  return res.data;
-});
+function rejectWithValue(error: string) {
+  throw new Error(error);
+}
+
+export const logInUser = createAsyncThunk(
+  'user/login',
+  async (values: { email: string; password: string }) => {
+    return axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/login`, values)
+      .then((response) => {
+        return response.data.token;
+      })
+      .catch((error) => {
+        return rejectWithValue(error.response.data.message || 'internal error');
+      });
+  }
+);
 
 const LoginSlice = createSlice({
   name: 'login',
@@ -29,13 +44,17 @@ const LoginSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(logInUser.pending, (state) => {
-      state.status = 'loading';
+      state.error = null;
+      state.value = null;
+      state.loading = true;
     });
-    builder.addCase(logInUser.fulfilled, (state) => {
-      state.status = 'succeeded';
+    builder.addCase(logInUser.fulfilled, (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.value = action.payload;
     });
-    builder.addCase(logInUser.rejected, (state) => {
-      state.status = 'failed';
+    builder.addCase(logInUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message || 'Unknown Error';
     });
   },
 });

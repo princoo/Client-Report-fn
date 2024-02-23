@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import SignUp from './pages/signUp/SignUp';
 import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
-import { store } from './redux/store';
+import store from './redux/store';
 
 function App() {
   library.add(fab, fas);

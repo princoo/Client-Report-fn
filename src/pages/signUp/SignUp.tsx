@@ -49,9 +49,9 @@ export default function SignUp() {
   return (
     <div className="w-full lg:w-3/5 border py-3 px-7 md:mx-auto mt-3 rounded-xl">
       <h1 className="text-4xl font-medium text-blue-600">Create an account</h1>
-      <span className="mb-6 text-sm">Simplify your work with Cart Care !</span>
+      <span className="text-sm">Simplify your work with Cats Care !</span>
 
-      <form action="" onSubmit={formik.handleSubmit} className="flex flex-col">
+      <form action="" onSubmit={formik.handleSubmit} className="flex flex-col mt-5">
         {/* names */}
         <div className="names flex flex-col md:flex-row gap-2 md:gap-3">
           <div className="flex flex-col gap-2 flex-grow">
@@ -166,7 +166,7 @@ export default function SignUp() {
           </select>
           {formik.touched.site && formik.errors.site && <ErrorDiv error={formik.errors.site} />}
         </div>
-        <Button type="submit" loading_state={isPending} text="Sign Up" />
+        <Button type="submit" loading_state={isPending} text="Sign Up" color="primary" />
         <p className="text-sm text-center mt-2">
           Already have an Account?
           <Link to="/auth/login" className="text-blue-500 ml-2 cursor:pointer">
