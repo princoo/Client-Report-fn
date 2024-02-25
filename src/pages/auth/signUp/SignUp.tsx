@@ -1,26 +1,34 @@
-import { InputWithLabel } from '../../components/Input';
+import { InputWithLabel } from '../../../components/Input';
 import { useFormik } from 'formik';
 import { validationSchema } from './Schemas/validationSchema';
-import { ChangeEvent, useState } from 'react';
-import { Button } from '../../components/Button';
-import ErrorDiv from '../../components/ErrorDiv';
+import { ChangeEvent, useEffect } from 'react';
+// import { Button } from '../../components/Button';
+import ErrorDiv from '../../../components/ErrorDiv';
 import { Link } from 'react-router-dom';
+import { UserFields } from '../interface';
+import { useSignUp, useSites } from './redux/hooks';
+import SnackBar from '../../../components/SnackBar/SnackBar';
+import { Button } from '../../../components/Button';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { setToken } from '../../../redux/slices/tokenSlice';
 
-type ValuesType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  site: string;
-  password: string;
-  confirmPassword: string;
-};
 export default function SignUp() {
-  const [isPending, setisPending] = useState(false);
+  const { handleSignUp, stats } = useSignUp();
+  const sites = useSites();
+  const sitesStats = useAppSelector((state) => state.sites);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading, error, value } = stats;
 
-  async function handleSubmit(values: ValuesType) {
-    //handles form submition
-    // console.log(values);
+  useEffect(() => {
+    if (value) {
+      dispatch(setToken(value));
+    }
+  }, [value, sites]);
+
+  async function handleSubmit(values: UserFields) {
+    handleSignUp(values);
   }
   const handleFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     formik.setFieldTouched(event.target.name, true, false);
@@ -35,19 +43,28 @@ export default function SignUp() {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: '',
+      phone: '',
       site: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: (values: ValuesType) => {
-      setisPending(true);
+    onSubmit: (values: UserFields) => {
       handleSubmit(values);
     },
   });
+
+  if (value) {
+    return (
+      <>
+        <SnackBar message="Account created successfully" orderOpen={true} severity="success" />
+        {navigate('/')}
+      </>
+    );
+  }
   return (
     <div className="w-full lg:w-3/5 border py-3 px-7 md:mx-auto mt-3 rounded-xl">
+      {error && <SnackBar message={error} orderOpen={true} severity="error" />}
       <h1 className="text-4xl font-medium text-blue-600">Create an account</h1>
       <span className="text-sm">Simplify your work with Cats Care !</span>
 
@@ -103,14 +120,14 @@ export default function SignUp() {
             <InputWithLabel
               label="Phone number"
               type="text"
-              name="phoneNumber"
-              id="phoneNumber"
+              name="phone"
+              id="phone"
               placeholder="Enter PhoneNumber"
-              value={formik.values.phoneNumber}
+              value={formik.values.phone}
               onChange={handleFieldChange}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-              <ErrorDiv error={formik.errors.phoneNumber} />
+            {formik.touched.phone && formik.errors.phone && (
+              <ErrorDiv error={formik.errors.phone} />
             )}
           </div>
         </div>
@@ -154,19 +171,15 @@ export default function SignUp() {
             onChange={handleSiteChange}
             id="site"
           >
-            <option value="option1" id="1">
-              Option 1
-            </option>
-            <option value="option2" id="2">
-              Option 2
-            </option>
-            <option value="option3" id="3">
-              Option 3
-            </option>
+            {sitesStats.value.map((site) => (
+              <option key={site.id} value={site.name}>
+                {site.name}
+              </option>
+            ))}
           </select>
           {formik.touched.site && formik.errors.site && <ErrorDiv error={formik.errors.site} />}
         </div>
-        <Button type="submit" loading_state={isPending} text="Sign Up" color="primary" />
+        <Button type="submit" loading_state={loading} text="Sign Up" color="primary" />
         <p className="text-sm text-center mt-2">
           Already have an Account?
           <Link to="/auth/login" className="text-blue-500 ml-2 cursor:pointer">

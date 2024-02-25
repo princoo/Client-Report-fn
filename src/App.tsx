@@ -4,10 +4,11 @@ import NavBar from './components/NavBar';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import SignUp from './pages/signUp/SignUp';
-import Login from './pages/Login/Login';
+import SignUp from './pages/auth/signUp/SignUp';
+import Login from './pages/auth/Login/Login';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import SideNav from './components/SideNav';
 
 function App() {
   library.add(fab, fas);
@@ -16,6 +17,7 @@ function App() {
     <div>
       <Provider store={store}>
         <NavBar />
+        <SideNav />
         <Routes>
           <Route path="/auth/signup" element={<SignUp />}></Route>
           <Route path="/auth/login" element={<Login />}></Route>

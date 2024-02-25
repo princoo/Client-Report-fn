@@ -1,14 +1,14 @@
-import { Button } from '../../components/Button';
-import { InputWithLabel } from '../../components/Input';
-import ErrorDiv from '../../components/ErrorDiv';
+import { Button } from '../../../components/Button';
+import { InputWithLabel } from '../../../components/Input';
+import ErrorDiv from '../../../components/ErrorDiv';
 import { useFormik } from 'formik';
 import { ChangeEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { validationSchema } from './Schema/loginSchema';
 import { useLogin } from './redux/hooks';
-import SnackBar from '../../components/SnackBar/SnackBar';
-import { useAppDispatch } from '../../redux/hooks';
-import { setToken } from '../../redux/slices/tokenSlice';
+import SnackBar from '../../../components/SnackBar/SnackBar';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setToken } from '../../../redux/slices/tokenSlice';
 
 type ValuesType = {
   email: string;
@@ -16,14 +16,14 @@ type ValuesType = {
 };
 export default function Login() {
   const { handleLogin, stats } = useLogin();
-  const { loading, error } = stats;
+  const { loading, error, value } = stats;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (stats.value) {
-      dispatch(setToken(stats.value));
+      dispatch(setToken(value));
     }
-  }, [stats.value]);
+  }, [value]);
 
   async function handleSubmit(values: ValuesType) {
     await handleLogin(values);
@@ -39,7 +39,6 @@ export default function Login() {
     },
     validationSchema,
     onSubmit: (values: ValuesType) => {
-      // setisPending(true);
       handleSubmit(values);
     },
   });

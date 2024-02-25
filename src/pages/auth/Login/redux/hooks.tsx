@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { logInUser } from './loginSlice';
 
 export const useLogin = () => {

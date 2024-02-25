@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import loginSlice from '../pages/Login/redux/loginSlice';
+import loginSlice from '../pages/auth/Login/redux/loginSlice';
 import {
   persistStore,
   persistReducer,
@@ -12,11 +12,15 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import tokenSlice from './slices/tokenSlice';
+import signUpSlice from '../pages/auth/signUp/redux/signUpSlice';
+import siteSlice from './slices/siteSlice';
 
 // ...
 const rootReducer = combineReducers({
   login: loginSlice,
+  signUp: signUpSlice,
   token: tokenSlice,
+  sites: siteSlice,
 });
 const persistConfig = {
   key: 'root',

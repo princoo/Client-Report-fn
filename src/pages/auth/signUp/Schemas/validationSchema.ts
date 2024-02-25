@@ -10,7 +10,7 @@ export const validationSchema = Yup.object().shape({
     .min(3, 'last name must be atleast 3 characters')
     .required('Last name is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  phoneNumber: Yup.string()
+  phone: Yup.string()
     .matches(/^[0-9]+$/, 'Invalid phone number') // Assuming a 10-digit phone number
     .required('Phone number is required'),
   site: Yup.string().required('site name is required'),

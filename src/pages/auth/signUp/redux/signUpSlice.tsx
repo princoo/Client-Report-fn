@@ -1,30 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-interface InitialTypes {
-  loading: boolean;
-  value: string | null;
-  error: string | null;
-  status: string;
-}
+import { InitialTypes, UserFields } from '../../interface';
 
 const initialState: InitialTypes = {
   loading: false,
   value: null,
   error: null,
-  status: 'idle',
 };
 
 function rejectWithValue(error: string) {
   throw new Error(error);
 }
 
-export const logInUser = createAsyncThunk(
-  'user/login',
-  async (values: { email: string; password: string }) => {
+export const signUpUser = createAsyncThunk(
+  'user/signup',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async ({ confirmPassword, ...rest }: UserFields) => {
     return axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/login`, values)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/signup`, rest)
       .then((response) => {
         return response.data.token;
       })
@@ -34,30 +28,30 @@ export const logInUser = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: 'login',
+const SignUpSlice = createSlice({
+  name: 'signup',
   initialState,
   reducers: {
-    addToken: (state, action: PayloadAction<string>) => {
+    addResponse: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(logInUser.pending, (state) => {
+    builder.addCase(signUpUser.pending, (state) => {
       state.error = null;
       state.value = null;
       state.loading = true;
     });
-    builder.addCase(logInUser.fulfilled, (state, action: PayloadAction<string>) => {
+    builder.addCase(signUpUser.fulfilled, (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.value = action.payload;
     });
-    builder.addCase(logInUser.rejected, (state, action) => {
+    builder.addCase(signUpUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message || 'Unknown Error';
     });
   },
 });
 
-export const { addToken } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { addResponse } = SignUpSlice.actions;
+export default SignUpSlice.reducer;
