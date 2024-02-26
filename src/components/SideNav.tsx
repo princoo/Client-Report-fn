@@ -28,10 +28,10 @@ export default function SideNav() {
 
       <aside
         id="default-sidebar"
-        className={`fixed sm:static top-13 left-0 z-40 w-64 h-screen sm:block ${isVisible ? '' : 'hidden'}`}
+        className={`fixed sm:static border-r top-13 left-0 z-40 w-64 h-screen sm:block ${isVisible ? '' : 'hidden'}`}
         ref={divRef}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto  sm:bg-white bg-gray-100  flex flex-col gap-2 sm:ps-10 sm:pt-16">
+        <div className="h-full px-3 py-4 overflow-y-auto  sm:bg-white bg-gray-100  flex flex-col gap-2 sm:ps-10 sm:pt-4">
           <h1 className="font-bold tracking-wider text-lg capitalize">{user?.firstName}</h1>
           <ul className="space-y-2 font-medium">
             <li>
