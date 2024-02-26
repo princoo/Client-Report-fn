@@ -6,23 +6,23 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import SignUp from './pages/auth/signUp/SignUp';
 import Login from './pages/auth/Login/Login';
-import { Provider } from 'react-redux';
-import store from './redux/store';
 import SideNav from './components/SideNav';
+import { useAppSelector } from './redux/hooks';
 
 function App() {
   library.add(fab, fas);
+  const { value } = useAppSelector((state) => state.token);
 
   return (
     <div>
-      <Provider store={store}>
-        <NavBar />
-        <SideNav />
+      <NavBar />
+      <div className="flex">
+        {value ? <SideNav /> : null}
         <Routes>
-          <Route path="/auth/signup" element={<SignUp />}></Route>
-          <Route path="/auth/login" element={<Login />}></Route>
+          <Route path="/auth/signup" element={<SignUp />} />
+          <Route path="/auth/login" element={<Login />} />
         </Routes>
-      </Provider>
+      </div>
     </div>
   );
 }
