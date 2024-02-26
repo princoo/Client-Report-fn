@@ -7,8 +7,8 @@ export default function NavBar() {
 
   return (
     <div>
-      <div className="flex w-full justify-between p-3 border-b-2">
-        <p className="font-medium text-lg">CATS CARE</p>
+      <div className="flex w-full sm:justify-between p-3 border-b-2 justify-end">
+        <p className="font-medium text-lg hidden sm:block">CATS CARE</p>
         <div className="flex gap-7 text-lg items-center">
           <p className="text-sm cursor:pointer">
             <Link to={'/'}>Home </Link>
