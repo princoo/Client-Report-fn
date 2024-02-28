@@ -66,7 +66,7 @@ export default function ViewAllReports() {
     return <Loader />;
   }
   if (error) {
-    return <PageNotFound />;
+    return <PageNotFound error={error} />;
   }
   return (
     <div>

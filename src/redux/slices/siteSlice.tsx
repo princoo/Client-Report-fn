@@ -19,20 +19,16 @@ const initialState: SitesState = {
 function rejectWithValue(error: string) {
   throw new Error(error);
 }
-export const getSites = createAsyncThunk(
-  'sites/all',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async () => {
-    return axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/sites`)
-      .then((response) => {
-        return response.data.data;
-      })
-      .catch((error) => {
-        return rejectWithValue(error.response.data.message || 'internal error');
-      });
-  }
-);
+export const getSites = createAsyncThunk('sites/all', async () => {
+  return axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/site`)
+    .then((response) => {
+      return response.data.data;
+    })
+    .catch((error) => {
+      return rejectWithValue(error.response.data.message || 'internal error');
+    });
+});
 
 const sitesSlice = createSlice({
   name: 'sites',

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { initialTypes, Report } from '../viewReports/interface';
@@ -14,26 +13,22 @@ function rejectWithValue(error: string) {
   throw new Error(error);
 }
 
-export const getReports = createAsyncThunk(
-  'reports/get',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async () => {
-    return axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/report/all`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${store.getState().token.value}`,
-        },
-      })
-      .then((response) => {
-        const { data } = response.data;
-        return data;
-      })
-      .catch((error) => {
-        return rejectWithValue(error.response.data.message || 'internal error');
-      });
-  }
-);
+export const getReports = createAsyncThunk('reports/get', async () => {
+  return axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/report/all`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${store.getState().token.value}`,
+      },
+    })
+    .then((response) => {
+      const { data } = response.data;
+      return data;
+    })
+    .catch((error) => {
+      return rejectWithValue(error.response.data.message || 'internal error');
+    });
+});
 
 const ReportsSlice = createSlice({
   name: 'reports',
