@@ -2,6 +2,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { InitialTypes } from '../../interface';
+// import store from '../../../../redux/store';
+// import { setToken } from '../../../../redux/slices/tokenSlice';
 
 const initialState: InitialTypes = {
   loading: false,

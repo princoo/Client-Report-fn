@@ -12,7 +12,6 @@ const initialState: InitialTypes = {
 function rejectWithValue(error: string) {
   throw new Error(error);
 }
-
 export const signUpUser = createAsyncThunk(
   'user/signup',
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

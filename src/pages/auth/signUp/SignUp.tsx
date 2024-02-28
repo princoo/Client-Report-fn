@@ -2,16 +2,15 @@ import { InputWithLabel } from '../../../components/Input';
 import { useFormik } from 'formik';
 import { validationSchema } from './Schemas/validationSchema';
 import { ChangeEvent, useEffect } from 'react';
-// import { Button } from '../../components/Button';
 import ErrorDiv from '../../../components/ErrorDiv';
 import { Link } from 'react-router-dom';
 import { UserFields } from '../interface';
 import { useSignUp, useSites } from './redux/hooks';
-import SnackBar from '../../../components/SnackBar/SnackBar';
 import { Button } from '../../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { setToken } from '../../../redux/slices/tokenSlice';
+import SnackBar from '../../../components/SnackBar/SnackBar';
 
 export default function SignUp() {
   const { handleSignUp, stats } = useSignUp();
@@ -25,7 +24,7 @@ export default function SignUp() {
     if (value) {
       dispatch(setToken(value));
     }
-  }, [value, sites]);
+  }, [value, sites, dispatch]);
 
   async function handleSubmit(values: UserFields) {
     handleSignUp(values);
@@ -62,9 +61,17 @@ export default function SignUp() {
       </>
     );
   }
+  if (error) {
+    return (
+      <>
+        <SnackBar message="Account created successfully" orderOpen={true} severity="success" />
+      </>
+    );
+  }
+
   return (
     <div className="w-full lg:w-3/5 border py-3 px-7 md:mx-auto mt-3 rounded-xl">
-      {error && <SnackBar message={error} orderOpen={true} severity="error" />}
+      {/* {error && <SnackBar message={error} orderOpen={true} severity="error" />} */}
       <h1 className="text-4xl font-medium text-blue-600">Create an account</h1>
       <span className="text-sm">Simplify your work with Cats Care !</span>
 

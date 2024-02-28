@@ -8,6 +8,7 @@ import SignUp from './pages/auth/signUp/SignUp';
 import Login from './pages/auth/Login/Login';
 import SideNav from './components/SideNav';
 import { useAppSelector } from './redux/hooks';
+import Reports from './pages/reports/Reports';
 
 function App() {
   library.add(fab, fas);
@@ -18,10 +19,13 @@ function App() {
       <NavBar />
       <div className="flex">
         {value ? <SideNav /> : null}
-        <Routes>
-          <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/auth/login" element={<Login />} />
-        </Routes>
+        <div className="flex-grow p-3 ms-4">
+          <Routes>
+            <Route path="/auth/signup" element={<SignUp />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/report/*" element={<Reports />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

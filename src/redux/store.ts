@@ -10,17 +10,19 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/es/storage';
 import tokenSlice from './slices/tokenSlice';
 import signUpSlice from '../pages/auth/signUp/redux/signUpSlice';
 import siteSlice from './slices/siteSlice';
+import reportsSlice from '../pages/reports/redux/reportsSlice';
 
 // ...
 const rootReducer = combineReducers({
-  login: loginSlice,
-  signUp: signUpSlice,
   token: tokenSlice,
+  login: loginSlice,
+  signup: signUpSlice,
   sites: siteSlice,
+  reports: reportsSlice,
 });
 const persistConfig = {
   key: 'root',

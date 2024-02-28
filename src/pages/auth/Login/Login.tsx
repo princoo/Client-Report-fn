@@ -3,12 +3,12 @@ import { InputWithLabel } from '../../../components/Input';
 import ErrorDiv from '../../../components/ErrorDiv';
 import { useFormik } from 'formik';
 import { ChangeEvent, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { validationSchema } from './Schema/loginSchema';
 import { useLogin } from './redux/hooks';
-import SnackBar from '../../../components/SnackBar/SnackBar';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setToken } from '../../../redux/slices/tokenSlice';
+import SnackBar from '../../../components/SnackBar/SnackBar';
 
 type ValuesType = {
   email: string;
@@ -18,12 +18,13 @@ export default function Login() {
   const { handleLogin, stats } = useLogin();
   const { loading, error, value } = stats;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (stats.value) {
       dispatch(setToken(value));
     }
-  }, [value]);
+  }, [value, dispatch, stats.value]);
 
   async function handleSubmit(values: ValuesType) {
     await handleLogin(values);
@@ -42,6 +43,14 @@ export default function Login() {
       handleSubmit(values);
     },
   });
+  if (value) {
+    return (
+      <>
+        <SnackBar message="Account created successfully" orderOpen={true} severity="success" />
+        {navigate('/')}
+      </>
+    );
+  }
   return (
     <div className="flex flex-col  w-full lg:w-2/5 md:w-3/5 border py-3 px-7 mx-auto mt-10 rounded-xl">
       {error && <SnackBar message={error} orderOpen={true} severity="error" />}
