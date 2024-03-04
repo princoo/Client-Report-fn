@@ -3,15 +3,24 @@ import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../redux/hooks';
 import decodeToken, { DecodedToken } from '../utils/token';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function SideNav() {
   const [isVisible, setIsVisible] = useState(false);
   const divRef = useRef<HTMLDivElement | null>(null);
   const { value } = useAppSelector((state) => state.token);
   const [user, setUser] = useState<DecodedToken>();
+  const location = useLocation();
   useEffect(() => {
     setUser(decodeToken(value || ''));
   }, [value]);
+
+  const isActiveLink = (path: string) => {
+    return location.pathname.startsWith(path);
+  };
+  // useEffect(() => {
+
+  // },[location.pathname]);
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev);
   };
@@ -36,40 +45,40 @@ export default function SideNav() {
           <h1 className="font-bold tracking-wider text-lg capitalize">{user?.firstName}</h1>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-100 group"
+              <Link
+                to="/report/all"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/report') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
               >
                 <FontAwesomeIcon icon="file-signature" className="text-blue-500 text-xl" />
                 <span className="flex-1 ms-3 whitespace-nowrap">Reports</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-100 group"
-              >
-                <FontAwesomeIcon icon="handshake" className="text-blue-500 text-xl" />
-                <span className="flex-1 ms-3 whitespace-nowrap">Home visits</span>
-              </a>
+              </Link>
             </li>
             <li>
               <Link
-                to="supportgroup/all"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-100 group"
+                to="/homevisit/all"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/homevisit') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
               >
-                <FontAwesomeIcon icon="group-arrows-rotate" className="text-blue-500 text-xl" />
+                <FontAwesomeIcon icon="handshake" className="text-blue-500 text-xl" />
+                <span className="flex-1 ms-3 whitespace-nowrap">Home visits</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/supportgroup/all"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/supportgroup') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
+              >
+                <FontAwesomeIcon icon="group-arrows-rotate" className={`text-blue-500 text-xl`} />
                 <span className="flex-1 ms-3 whitespace-nowrap">Support groups</span>
               </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-100 group"
+              <Link
+                to="/weeklyplan"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/weeklyplan') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
               >
                 <FontAwesomeIcon icon="calendar-days" className="text-blue-500 text-xl" />
                 <span className="flex-1 ms-3 whitespace-nowrap">Weekly plan</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

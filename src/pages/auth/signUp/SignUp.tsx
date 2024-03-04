@@ -57,7 +57,7 @@ export default function SignUp() {
     return (
       <>
         <SnackBar message="Account created successfully" orderOpen={true} severity="success" />
-        {navigate('/')}
+        {navigate('/report/all')}
       </>
     );
   }
