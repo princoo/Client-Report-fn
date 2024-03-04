@@ -12,7 +12,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: React.FC<ButtonProps> = (props) => {
   const { size, color, text, onClick, type, loading_state, ...restProps } = props;
   const buttonSize = `w-${size || 'full'}`;
-  const buttonColor = color === 'primary' ? 'bg-blue-500' : 'bg-blue-200';
+  const buttonColor =
+    color === 'primary' ? 'bg-blue-500' : color === 'delete' ? 'bg-red-500' : 'bg-blue-200';
 
   return (
     <button

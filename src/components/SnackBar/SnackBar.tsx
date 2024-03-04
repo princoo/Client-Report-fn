@@ -14,7 +14,7 @@ export default function SnackBar(props: SnackProps) {
   const { orderOpen, message, severity } = props;
   const [open, setOpen] = React.useState(orderOpen);
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleClose = (_event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }

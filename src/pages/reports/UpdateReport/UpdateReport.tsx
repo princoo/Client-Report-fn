@@ -44,7 +44,7 @@ export default function UpdateReport(props: {
       <Dialog
         fullScreen={fullScreen}
         open={isOpen}
-        onClose={(event, reason) => {
+        onClose={(_event, reason) => {
           if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
             handleClose();
           }

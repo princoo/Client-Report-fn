@@ -42,7 +42,7 @@ export default function AddReport(props: { isOpen: boolean; handleClose: () => v
       <Dialog
         fullScreen={fullScreen}
         open={isOpen}
-        onClose={(event, reason) => {
+        onClose={(_event, reason) => {
           if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
             // Set 'open' to false, however you would do that with your particular code.
             handleClose();
@@ -56,7 +56,7 @@ export default function AddReport(props: { isOpen: boolean; handleClose: () => v
           <div className="flex flex-col  w-full py-1 px-7">
             <h1 className="text-2xl font-medium text-blue-500">
               <FontAwesomeIcon icon="hospital-user" className="me-2 text-4xl" />
-              Add client
+              Add Client
             </h1>
             <span className="mb-4 text-sm"></span>
             <ReportForm

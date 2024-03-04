@@ -15,6 +15,7 @@ import tokenSlice from './slices/tokenSlice';
 import signUpSlice from '../pages/auth/signUp/redux/signUpSlice';
 import siteSlice from './slices/siteSlice';
 import reportsSlice from '../pages/reports/redux/reportsSlice';
+import supportGroupSlice from '../pages/supportGroup/redux/supportGroupSlice';
 
 // ...
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   signup: signUpSlice,
   sites: siteSlice,
   reports: reportsSlice,
+  supportgroups: supportGroupSlice,
 });
 const persistConfig = {
   key: 'root',
