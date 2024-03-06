@@ -10,6 +10,7 @@ import SideNav from './components/SideNav';
 import { useAppSelector } from './redux/hooks';
 import Reports from './pages/reports/Reports';
 import SupportGroup from './pages/supportGroup/SupportGroup';
+import HomeVisit from './pages/homeVisit/HomeVisit';
 
 function App() {
   library.add(fab, fas);
@@ -26,6 +27,7 @@ function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/report/*" element={<Reports />} />
             <Route path="/supportgroup/*" element={<SupportGroup />} />
+            <Route path="/homevisit/*" element={<HomeVisit />} />
           </Routes>
         </div>
       </div>

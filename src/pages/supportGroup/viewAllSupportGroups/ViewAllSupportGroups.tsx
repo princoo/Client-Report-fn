@@ -25,14 +25,14 @@ export default function ViewAllSupportGroups() {
   }
   return (
     <div>
-      <div className="header px-3 py-5 rounded-xl flex justify-between sm:flex-wrap">
+      <div className="header px-3 py-1 rounded-xl flex justify-between flex-col sm:flex-row gap-5 sm:gap-0">
         <div className="title flex flex-col items-start">
           <FontAwesomeIcon icon="group-arrows-rotate" className="text-4xl text-blue-600 mb-2" />
           <h1 className="text-3xl font-bold text-blue-600 tracking-wider">SupportGroups</h1>
           <span className="text-sm">Encouragement, Comfort, and Advice</span>
         </div>
         {!isMentor(token.value) && (
-          <div className="self-start md:self-end">
+          <div className="self-start md:self-start">
             <Link
               to="/supportgroup/add"
               className="bg-blue-500 py-2 px-4 rounded-lg text-sm text-white cursor:pointer"
