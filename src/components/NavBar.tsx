@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import { clearToken } from '../redux/slices/tokenSlice';
+import logo from '/images/logo.png';
 
 export default function NavBar() {
   const { value } = useAppSelector((state) => state.token);
@@ -16,7 +17,9 @@ export default function NavBar() {
   return (
     <div>
       <div className="flex w-full lg:justify-between p-3 border-b-2 justify-end">
-        <p className="font-medium text-lg hidden lg:block">CATS CARE</p>
+        <div className="logo w-28 bg-blu-100">
+          <img src={logo} alt="logo" className="w-full object-cover" />
+        </div>
         <div className="flex gap-7 text-lg items-center">
           <p className="text-sm cursor:pointer hover:bg-blue-100 px-2 py-1 rounded-lg">
             <Link to={'/'}>Home </Link>
