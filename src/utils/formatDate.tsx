@@ -4,6 +4,10 @@ function formatDate(date: string) {
   const todayDate: Date = new Date(date);
   return todayDate.toISOString().split('T')[0]; // get today's date
 }
+function countryDateFormat(date: string) {
+  const formattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+  return formattedDate;
+}
 
 function formatGivenDate(date: string) {
   const newDate = moment(date);
@@ -29,4 +33,4 @@ function formatTimeAgo(date: string): string {
   }
 }
 
-export { formatDate, formatGivenDate, formatTimeAgo };
+export { formatDate, formatGivenDate, formatTimeAgo, countryDateFormat };

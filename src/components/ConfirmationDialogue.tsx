@@ -14,7 +14,6 @@ export default function ConfirmationDialogue(props: {
   item: string;
 }) {
   const { onAgree, onClose, Onopen, item } = props;
-
   return (
     <React.Fragment>
       <Dialog

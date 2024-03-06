@@ -4,7 +4,7 @@ import loader from '/svgs/spinner.svg';
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: string;
   color?: string;
-  text: string;
+  text: React.ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
   loading_state?: boolean;
