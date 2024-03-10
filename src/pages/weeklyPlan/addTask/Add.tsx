@@ -1,6 +1,6 @@
 import FormAdd from '../components/FormAdd';
-import { HomeVisitData, OnAddBody } from '../interface';
-import { useHomeVisits } from '../redux/hooks';
+import { OnAddBody, TaskData } from '../interface';
+import { useTasks } from '../redux/hooks';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { Fragment } from 'react';
@@ -13,17 +13,19 @@ import SnackBar from '../../../components/SnackBar/SnackBar';
 export default function Add(props: {
   handleClose: () => void;
   isOpen: boolean;
-  handleAddNewData: (data: HomeVisitData) => void;
+  handleAddNewData: (data: TaskData) => void;
 }) {
   const { isOpen, handleClose, handleAddNewData } = props;
-  const { onAdd, addHomeVisit } = useHomeVisits();
+  const { onAdd, addTask } = useTasks();
 
-  const handleSubmit = (values: OnAddBody) => {
-    addHomeVisit(values);
+  const handleSubmit = (body: OnAddBody) => {
+    addTask(body);
   };
   if (onAdd.data) {
     handleClose();
-    handleAddNewData(onAdd.data);
+    setTimeout(() => {
+      handleAddNewData(onAdd.data!.data);
+    }, 100);
   }
 
   const theme = useTheme();
@@ -31,7 +33,7 @@ export default function Add(props: {
   return (
     <Fragment>
       {onAdd.error && <SnackBar orderOpen={true} message={onAdd.error} severity="error" />}
-      {onAdd.data && <SnackBar orderOpen={true} message="HomeVisit created" severity="success" />}
+      {onAdd.data && <SnackBar orderOpen={true} message="Task created" severity="success" />}
       <Dialog
         fullScreen={fullScreen}
         open={isOpen}
@@ -48,8 +50,8 @@ export default function Add(props: {
         <DialogContent>
           <div className="flex flex-col  w-full py-1 px-7">
             <h1 className="text-2xl font-medium text-blue-500">
-              <FontAwesomeIcon icon="handshake" className="me-2 text-4xl" />
-              Add HomeVisit
+              <FontAwesomeIcon icon="list-check" className="me-2 text-4xl" />
+              Add Task
             </h1>
             <span className="mb-4 text-sm"></span>
             <FormAdd handleSubmit={handleSubmit} onAdd={onAdd} />

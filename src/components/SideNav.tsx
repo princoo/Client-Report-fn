@@ -73,7 +73,7 @@ export default function SideNav() {
             </li>
             <li>
               <Link
-                to="/weeklyplan"
+                to="/weeklyplan/tasks/all"
                 className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/weeklyplan') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
               >
                 <FontAwesomeIcon icon="calendar-days" className="text-blue-500 text-xl" />
