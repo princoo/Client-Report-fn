@@ -19,6 +19,8 @@ import AddReport from '../addReport/AddReport';
 import UpdateReport from '../UpdateReport/UpdateReport';
 import moment from 'moment';
 import EmptyData from '../../../components/EmptyData';
+import { isMentor } from '../../../utils/user';
+import { useAppSelector } from '../../../redux/hooks';
 
 export default function ViewAllReports() {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -26,6 +28,8 @@ export default function ViewAllReports() {
   const [openUpdateDialog, setUpdateDialog] = useState<boolean>(false);
   const [reportId, setReportId] = useState<string>('');
   const { fetchReports, loading, error, reports } = useReports();
+  const token = useAppSelector((state) => state.token);
+
   useEffect(() => {
     fetchReports();
   }, []);
@@ -70,20 +74,23 @@ export default function ViewAllReports() {
   }
   return (
     <div>
-      <div className="flex justify-between px-2 flex-col md:flex-row mb-10 gap-2 md:gap-0">
-        <div className="header flex flex-col">
-          <h1 className="text-2xl font-medium text-blue-500">Clients Today</h1>
+      <div className="flex justify-between px-2 flex-col md:flex-row mb-2 gap-2 md:gap-0">
+        <div className="title flex flex-col items-start mb-7">
+          <FontAwesomeIcon icon="users" className="text-4xl text-blue-600 mb-2" />
+          <h1 className="text-3xl font-bold text-blue-600 tracking-wider">Clients Today</h1>
           <span className="text-sm text-gray-400 m-0 p-0">{formattedDate}</span>
         </div>
-        <div className="btn md:self-center ">
-          <button
-            onClick={handleAddReportOpen}
-            className="bg-blue-500 p-2 rounded-lg text-sm text-white cursor:pointer"
-          >
-            <FontAwesomeIcon icon="add" className="me-2" />
-            ADD CLIENT
-          </button>
-        </div>
+        {!isMentor(token.value) && (
+          <div className="btn md:self-center ">
+            <button
+              onClick={handleAddReportOpen}
+              className="bg-blue-500 p-2 rounded-lg text-sm text-white cursor:pointer"
+            >
+              <FontAwesomeIcon icon="add" className="me-2" />
+              New
+            </button>
+          </div>
+        )}
       </div>
       {reports.length !== 0 ? (
         <TableContainer component={Paper} sx={{ width: '100%', mb: 2 }}>

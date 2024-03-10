@@ -17,6 +17,7 @@ import siteSlice from './slices/siteSlice';
 import reportsSlice from '../pages/reports/redux/reportsSlice';
 import supportGroupSlice from '../pages/supportGroup/redux/supportGroupSlice';
 import HomeVisitSlice from '../pages/homeVisit/redux/HomeVisitSlice';
+import TaskSlice from '../pages/weeklyPlan/redux/weeklyPlanSlice';
 
 // ...
 const rootReducer = combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   reports: reportsSlice,
   supportgroups: supportGroupSlice,
   homevisit: HomeVisitSlice,
+  tasks: TaskSlice,
 });
 const persistConfig = {
   key: 'root',
