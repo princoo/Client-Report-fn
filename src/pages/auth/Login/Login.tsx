@@ -44,13 +44,9 @@ export default function Login() {
     },
   });
   if (value) {
-    return (
-      <>
-        <SnackBar message="Account created successfully" orderOpen={true} severity="success" />
-        {navigate('/report/all')}
-      </>
-    );
+    navigate('/client/all');
   }
+
   return (
     <div className="flex flex-col  w-full lg:w-2/5 md:w-3/5 border py-3 px-7 mx-auto mt-10 rounded-xl">
       {error && <SnackBar message={error} orderOpen={true} severity="error" />}

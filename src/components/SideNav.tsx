@@ -46,11 +46,11 @@ export default function SideNav() {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to="/report/all"
-                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/report') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
+                to="/client/all"
+                className={`flex items-center p-2 text-gray-900 rounded-lg ${isActiveLink('/client') ? 'bg-blue-200' : ''} hover:bg-blue-100 group`}
               >
                 <FontAwesomeIcon icon="file-signature" className="text-blue-500 text-xl" />
-                <span className="flex-1 ms-3 whitespace-nowrap">Reports</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Clients</span>
               </Link>
             </li>
             <li>

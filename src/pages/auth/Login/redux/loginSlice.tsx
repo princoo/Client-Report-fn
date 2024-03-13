@@ -35,6 +35,9 @@ const LoginSlice = createSlice({
     addToken: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
+    clearLogin: (state) => {
+      state.value = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(logInUser.pending, (state) => {
@@ -53,5 +56,5 @@ const LoginSlice = createSlice({
   },
 });
 
-export const { addToken } = LoginSlice.actions;
+export const { addToken, clearLogin } = LoginSlice.actions;
 export default LoginSlice.reducer;
