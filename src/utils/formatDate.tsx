@@ -33,4 +33,14 @@ function formatTimeAgo(date: string): string {
   }
 }
 
-export { formatDate, formatGivenDate, formatTimeAgo, countryDateFormat };
+function tasksDueDate() {
+  // Get the current date
+  const currentDate = new Date();
+
+  // Get the end of the current week using Moment.js
+  const endOfWeek = moment(currentDate).endOf('isoWeek').format('DD-MM-YYYY');
+
+  return endOfWeek;
+}
+
+export { formatDate, formatGivenDate, formatTimeAgo, countryDateFormat, tasksDueDate };

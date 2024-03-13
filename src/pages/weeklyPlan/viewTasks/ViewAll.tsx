@@ -3,7 +3,6 @@ import { useTasks } from '../redux/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EmptyData from '../../../components/EmptyData';
 import Loader from '../../../components/pageLoader/loader';
-import PageNotFound from '../../../components/PageNotFound';
 import ProgressBar from '../../../components/ProgressBar';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import SpinnerComponent from '../../../components/SpinnerComponent';
@@ -13,6 +12,18 @@ import ConfirmationDialogue from '../../../components/ConfirmationDialogue';
 import Add from '../addTask/Add';
 import { TaskData } from '../interface';
 import { addTaskReducer } from '../redux/weeklyPlanSlice';
+import FallBackComponent from '../../../components/FallBackComponent';
+import {
+  Table,
+  TableContainer,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableHead,
+  Paper,
+  Checkbox,
+} from '@mui/material';
+import { tasksDueDate } from '../../../utils/formatDate';
 
 export default function ViewAll() {
   const dispatch = useAppDispatch();
@@ -46,6 +57,9 @@ export default function ViewAll() {
       setSelectedId('');
     }
   }
+  async function handleRetry() {
+    fetchTasks();
+  }
 
   const handleAddNewData = (data: TaskData) => {
     dispatch(addTaskReducer(data));
@@ -61,7 +75,7 @@ export default function ViewAll() {
   }, []);
 
   if (error) {
-    return <PageNotFound error={error} />;
+    return <FallBackComponent error={error} resetErrorBoundary={handleRetry} />;
   }
 
   return (
@@ -88,52 +102,64 @@ export default function ViewAll() {
             </div>
           )}
         </div>
+        <p className="text-sm text-gray-500 mb-2">
+          Your task(s) are due to <span>{tasksDueDate()}</span>
+        </p>
+
         {!loading && tasks.length !== 0 && (
           <div className="mb-10">
             <ProgressBar tasks={tasks} />
           </div>
         )}
+        {!loading && tasks.length !== 0 ? (
+          <TableContainer component={Paper} sx={{ width: '100%', mb: 2 }}>
+            <Table aria-label="reports table">
+              <TableHead className="bg-gray-300">
+                <TableRow>
+                  {/* <TableCell>Check</TableCell> */}
+                  <TableCell>Task</TableCell>
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tasks.map((task) => (
+                  <TableRow key={task.id} className="cursor-pointer hover:bg-gray-100">
+                    <TableCell className="capitalize flex items-center">
+                      <Checkbox
+                        checked={task.status === 'COMPLETED'}
+                        disabled={onStatusUpdate.loading}
+                        className="defaultCheckbox mr-2" // Add margin to create space between checkbox and text
+                        name="weekly"
+                        onChange={() => {
+                          changeStatus(task.id);
+                        }}
+                      />
+                      <span>{task.description}</span>
+                    </TableCell>
 
-        {!loading && tasks.length !== 0
-          ? tasks.map((item, index) => (
-              <div
-                className={`flex justify-between p-3 text-lg border-gray-100 border-2 rounded-lg ${item.status === 'PENDING' ? 'bg-gray-100' : 'bg-blue-100'} hover:bg-gray-100 mb-2`}
-                key={index}
-              >
-                <div className="w-full flex gap-2">
-                  {!onStatusUpdate.loading ? (
-                    <input
-                      type="checkbox"
-                      checked={item.status === 'COMPLETED' ? true : false}
-                      disabled={onStatusUpdate.loading}
-                      className="defaultCheckbox relative flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] items-center
-                            justify-center rounded-md border border-gray-300  outline-none transition duration-[0.2s]
-                            checked:border-none checked:text-white hover:cursor-pointer checked:bg-brand-500"
-                      name="weekly"
-                      onChange={() => {
-                        changeStatus(item.id);
-                      }}
-                    />
-                  ) : (
-                    selectedId === item.id && <SpinnerComponent />
-                  )}
-                  <p className="text-base font-medium text-navy-700 ">{item.description}</p>
-                </div>
-                <span
-                  className="material-symbols-rounded text-navy-700  cursor-pointer"
-                  onClick={() => {
-                    handleConfirm(item.id);
-                  }}
-                >
-                  {!onDeleteTask.loading ? (
-                    <FontAwesomeIcon icon="trash" />
-                  ) : (
-                    selectedId === item.id && <SpinnerComponent />
-                  )}
-                </span>
-              </div>
-            ))
-          : !loading && <EmptyData items="Tasks" />}
+                    <TableCell className="max-w-[100px] truncate">
+                      <span
+                        className="material-symbols-rounded text-navy-700  cursor-pointer"
+                        onClick={() => {
+                          handleConfirm(task.id);
+                        }}
+                      >
+                        {!onDeleteTask.loading ? (
+                          <FontAwesomeIcon icon="trash" />
+                        ) : (
+                          selectedId === task.id && <SpinnerComponent />
+                        )}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          // ))
+          !loading && <EmptyData items="Tasks" />
+        )}
       </div>
       {loading && <Loader />}
       {onAlert && (

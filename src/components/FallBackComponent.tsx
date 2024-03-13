@@ -12,7 +12,7 @@ const FallBackComponent: React.FC<FallbackProps> = ({ error, resetErrorBoundary 
     <div role="alert" className=" flex flex-col justify-center items-center mt-5 gap-2">
       <img src={serverError} alt="svg" className="w-1/3" />
       <p className="text-lg font-medium">Something went wrong:</p>
-      <pre>{error.message}</pre>
+      <pre>{error.message || error}</pre>
       <button onClick={resetErrorBoundary} className="bg-blue-600 text-white px-2 rounded-xl">
         <FontAwesomeIcon icon="refresh" className="mr-2" />
         Try again

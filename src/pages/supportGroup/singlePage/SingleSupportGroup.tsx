@@ -10,6 +10,8 @@ import { Button } from '../../../components/Button';
 import ConfirmationDialogue from '../../../components/ConfirmationDialogue';
 import SnackBar from '../../../components/SnackBar/SnackBar';
 import Update from '../updateSupportGroup/Update';
+import { useAppSelector } from '../../../redux/hooks';
+import { isMentor } from '../../../utils/user';
 
 export default function SingleSupportGroup() {
   const {
@@ -29,6 +31,7 @@ export default function SingleSupportGroup() {
   const [openUpdateDialogue, setopenUpdateDialogue] = useState<boolean>(false);
   const navigate = useNavigate();
   const [updateFields, setupdateFields] = useState<SGBody>();
+  const token = useAppSelector((state) => state.token);
 
   useEffect(() => {
     getSingleSupportGroup(sid || '').then((data) => {
@@ -89,13 +92,15 @@ export default function SingleSupportGroup() {
                 Host: {body.User.firstName + ' ' + body.User.lastName}
               </p>
             </div>
-            <span
-              className=" px-2 py-2 rounded self-center text-sm cursor-pointer hover:bg-blue-100"
-              onClick={() => setopenUpdateDialogue(true)}
-            >
-              <FontAwesomeIcon icon="pen" className="mr-2" />
-              Edit
-            </span>
+            {!isMentor(token.value) && (
+              <span
+                className=" px-2 py-2 rounded self-center text-sm cursor-pointer hover:bg-blue-100"
+                onClick={() => setopenUpdateDialogue(true)}
+              >
+                <FontAwesomeIcon icon="pen" className="mr-2" />
+                Edit
+              </span>
+            )}
           </div>
           <Carousel images={SGbody!.data.images} />
           <div className="body my-10">
@@ -103,15 +108,17 @@ export default function SingleSupportGroup() {
             <p className="text-sm text-gray-500">Date: {body.date}</p>
             <p className="text-lg mt-2">{body.description}</p>
           </div>
-          <div className="action w-20">
-            <Button
-              onClick={() => setonAlert(true)}
-              text="Delete"
-              type="button"
-              color="delete"
-              loading_state={onDelete.loading}
-            />
-          </div>
+          {!isMentor(token.value) && (
+            <div className="action w-20">
+              <Button
+                onClick={() => setonAlert(true)}
+                text="Delete"
+                type="button"
+                color="delete"
+                loading_state={onDelete.loading}
+              />
+            </div>
+          )}
         </div>
       )}
       {onAlert && (
