@@ -12,6 +12,14 @@ export interface TaskData {
   WeeklyPlanId: string;
   createdAt: string;
   updatedAt: string;
+  WeeklyPlan: {
+    id: string;
+    User: {
+      id: string;
+      firstName: string;
+      lastName: string;
+    };
+  };
 }
 export interface DefaultResponse {
   code: number;
@@ -30,4 +38,5 @@ export interface OnAddResponse extends DefaultResponse {
 
 export interface OnAddBody {
   description: string;
+  dueDate: string;
 }

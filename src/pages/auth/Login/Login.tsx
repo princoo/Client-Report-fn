@@ -44,7 +44,7 @@ export default function Login() {
     },
   });
   if (value) {
-    navigate('/client/all');
+    navigate('/client/all', { replace: true });
   }
 
   return (
