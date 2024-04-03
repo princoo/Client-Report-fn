@@ -44,8 +44,8 @@ export default function ViewAll() {
     <div>
       <div className="flex justify-between px-2 flex-col md:flex-row mb-2 gap-2 md:gap-0">
         <div className="title flex flex-col items-start mb-7">
-          <FontAwesomeIcon icon="handshake" className="text-4xl text-blue-600 mb-2" />
-          <h1 className="text-3xl font-bold text-blue-600 tracking-wider">HomeVisits</h1>
+          <FontAwesomeIcon icon="handshake" className="text-2xl text-blue-600 mb-2" />
+          <h1 className="text-xl font-bold text-blue-600 tracking-wider">HomeVisits</h1>
           <span className="text-sm">Care beyond Homes</span>
         </div>
         {!isMentor(token.value) && (
