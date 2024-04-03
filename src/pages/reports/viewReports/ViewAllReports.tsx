@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { useReports } from '../redux/hooks';
-import PageNotFound from '../../../components/PageNotFound';
 import Loader from '../../../components/pageLoader/loader';
 import {
   Table,
@@ -23,6 +23,8 @@ import { isMentor } from '../../../utils/user';
 import { useAppSelector } from '../../../redux/hooks';
 
 export default function ViewAllReports() {
+  const { showBoundary } = useErrorBoundary();
+
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openAddDialog, setOpenAddDialog] = useState<boolean>(false);
   const [openUpdateDialog, setUpdateDialog] = useState<boolean>(false);
@@ -70,14 +72,14 @@ export default function ViewAllReports() {
     return <Loader />;
   }
   if (error) {
-    return <PageNotFound error={error} />;
+    showBoundary(error);
   }
   return (
     <div>
       <div className="flex justify-between px-2 flex-col md:flex-row mb-2 gap-2 md:gap-0">
         <div className="title flex flex-col items-start mb-7">
-          <FontAwesomeIcon icon="users" className="text-4xl text-blue-600 mb-2" />
-          <h1 className="text-3xl font-bold text-blue-600 tracking-wider">Clients Today</h1>
+          <FontAwesomeIcon icon="users" className="text-2xl text-blue-600 mb-2" />
+          <h1 className="text-xl font-bold text-blue-600 tracking-wider">Clients today</h1>
           <span className="text-sm text-gray-400 m-0 p-0">{formattedDate}</span>
         </div>
         {!isMentor(token.value) && (
