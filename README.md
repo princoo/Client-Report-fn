@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+## We Care - React App -  Read Me
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is the frontend application for the "We Care" platform, a comprehensive web-based system designed to improve hospital efficiency and streamline patient care processes. It provides administrative staff with essential tools for:
 
-Currently, two official plugins are available:
+* **Managing Patient Records:** Easily access, update, and maintain patient information.
+* **Medical History Tracking:**  Track patient medical history for informed decision making.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This Read Me file covers how to set up and run the development environment for the We Care React app.
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* Node.js and npm (or yarn) installed on your system. You can download them from [https://nodejs.org/en/download](https://nodejs.org/en/download)
 
-- Configure the top-level `parserOptions` property like this:
+### Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+1. Clone this repository.
+2. Navigate to the project directory in your terminal.
+3. Run `npm install` (or `yarn install`) to install project dependencies.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Running the App
+
+**Development Mode:**
+
+1. Start the development server with `npm run dev` (or `yarn dev`).
+2. The application will be accessible in your browser at http://localhost:3000/ by default.
+
+**Production Build:**
+
+1. Create an optimized production build for deployment with `npm run build` (or `yarn build`).
+2. The production-ready files will be located in the `dist` directory. 
+
+### Available Scripts
+
+The following scripts are available in the project's `package.json` file:
+
+* `dev`: Starts the development server for live updates while coding.
+* `build`: Creates an optimized production build for deployment.
+* `preview`: Starts a preview server for the production build.
+* `prepare`: Runs Husky pre-commit hooks (if configured).
+* `format`: Formats code using Prettier.
+* `lint`: Runs ESLint for code linting.
+* `lint-fix`: Runs ESLint and automatically fixes linting errors (if possible).
+
+This Read Me provides a basic overview of getting started with the We Care React App. 
+
+For further development and customization, refer to the project's codebase and any additional documentation that might be available.
